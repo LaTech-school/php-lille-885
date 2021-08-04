@@ -28,6 +28,190 @@ $min_year = $max_year - 100;
 // Define the month array
 $a_month = ["Janvier", "Février", "Mars", "Avril", "Mai", "Juin", "Juillet", "Aout", "Septembre", "Octobre", "Novembre", "Décembre"];
 
+// Define valide genders
+$availableGenders = ['M','F','N'];
+
+
+
+// From Treatment
+// --
+
+// INFO : Define the request method
+// --
+// $request_method = $_SERVER['REQUEST_METHOD'];
+// echo $request_method . "<br>";
+
+
+// Retrieve form data
+if ($_SERVER['REQUEST_METHOD'] === 'POST')
+{
+    // INFO: Valeurs du tableau $_POST
+    // Array (
+    //     [crsf-token] => null,
+    //     [firstname] => null
+    //     [lastname] => null
+    //     [birthday] => Array ( 
+    //         [day] => null 
+    //         [month] => null 
+    //         [year] => null 
+    //     ) 
+    //     [email] => null
+    //     [password] => null
+    // )
+    print_r($_POST);
+
+
+    // Retrieve Form Data
+    // --
+
+    // Retrieve the CSRF Token
+    $csrfToken = isset($_POST['csrf-token']) ? $_POST['csrf-token'] : null;
+    // var_dump($csrfToken); echo "<br>";
+
+    // Retrieve the user Firstname
+    $firstname = isset($_POST['firstname']) ? $_POST['firstname'] : null;
+    // var_dump($firstname); echo "<br>";
+
+    // Retrieve the user Lastname
+    $lastname = isset($_POST['lastname']) ? $_POST['lastname'] : null;
+    // var_dump($lastname); echo "<br>";
+    
+    // Retrieve the user Birthday
+    $birthday_day = isset($_POST['birthday']['day']) ? $_POST['birthday']['day'] : null;
+    $birthday_month = isset($_POST['birthday']['month']) ? $_POST['birthday']['month'] : null;
+    $birthday_year = isset($_POST['birthday']['year']) ? $_POST['birthday']['year'] : null;
+    // var_dump($birthday_day); echo "<br>";
+    // var_dump($birthday_month); echo "<br>";
+    // var_dump($birthday_year); echo "<br>";
+
+    // Retrieve the user Email
+    $email = isset($_POST['email']) ? $_POST['email'] : null;
+    // var_dump($email); echo "<br>";
+
+    // Retrieve the user Password
+    $password = isset($_POST['password']) ? $_POST['password'] : null;
+    // var_dump($password); echo "<br>";
+
+    // Retrieve the user Gender
+    $gender = isset($_POST['gender']) ? $_POST['gender'] : null;
+    // var_dump($gender); echo "<br>";
+
+    // Retrieve the Agree Terms
+    $agreeTerms = isset($_POST['agreeTerms']) ? true : false;
+    // var_dump($agreeTerms); echo "<br>";
+
+
+    // Check Form Data
+    // --
+
+
+    // Create the $errors array
+    $errors = [];
+
+
+    // Check CSRF Token
+    // SELECT id <table> WHERE token="$csrfToken"
+    // SI id = Token est valide
+    // Sinon = token invalide
+    // array_push($errors, "token invalide") Si la donnée est invalide
+
+
+    // Check firstname
+    // if ( !preg_match("/[a-z]+/i", $firstname) )
+    if ( !preg_match("/[a-z]{2,}/i", $firstname) )
+    {
+        // array_push($errors, "") Si la donnée est invalide
+        array_push($errors, [
+            'field' => "firstname",
+            'message' => "Votre prénom n'est pas valide."
+        ]);
+    }
+
+    // Check Lastname
+    // array_push($errors, "") Si la donnée est invalide
+    if ( !preg_match("/[a-z]{2,}/i", $lastname) )
+    {
+        // array_push($errors, "") Si la donnée est invalide
+        array_push($errors, [
+            'field' => "lastname",
+            'message' => "Votre nom n'est pas valide."
+        ]);
+    }
+
+    // Check Birthday
+    // array_push($errors, "") Si la donnée est invalide
+    
+    // Check Email
+    // array_push($errors, "") Si la donnée est invalide
+    
+    // Check Password
+    // array_push($errors, "") Si la donnée est invalide
+    
+    // Check Gender
+    // array_push($errors, "") Si la donnée est invalide
+    // if ( !preg_match("/(M|F|N)/", $gender) )
+    if ( !in_array($gender, $availableGenders) )
+    {
+        // array_push($errors, "") Si la donnée est invalide
+        array_push($errors, [
+            'field' => "gender",
+            'message' => "Le genre n'est pas valide."
+        ]);
+    }
+    
+    // Check Agree Terms
+    // array_push($errors, "") Si la donnée est invalide
+    if ( !$agreeTerms )
+    {
+        // array_push($errors, "") Si la donnée est invalide
+        array_push($errors, [
+            'field' => "agreeTerms",
+            'message' => "Vous devez accepter les CGU."
+        ]);
+    }
+
+
+
+    // Save Data in DB
+    // --
+
+    // Check the $errors array
+    // if $error is empty, we can save data
+    // else we display errors messages
+
+    if ( empty($errors) )
+    {
+        // Save data
+        echo "YOUPI !! On enregistre les données dans la BDD";
+    }
+    else 
+    {
+        // display errors messages
+        echo "Booooo t'as fait des erreurs !<br><br>";
+
+
+        echo "<pre>";
+        print_r($errors);
+        echo "</pre>";
+
+        //  Affiche le message d'erreur de firstname
+        foreach ($errors as $error)
+        {
+            if ($error['field'] == "firstname")
+            {
+                echo "<pre>";
+                print_r($error['message']);
+                $error_firstname = $error['message'];
+                echo "</pre>";
+            }
+        }
+
+    }
+
+    
+}
+
+
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -75,6 +259,7 @@ $a_month = ["Janvier", "Février", "Mars", "Avril", "Mai", "Juin", "Juillet", "A
                     <div class="mb-3">
                         <label for="firstname">Prénom</label>
                         <input type="text" class="form-control" name="firstname" id="firstname" placeholder="Prénom">
+                        <p><?= isset($error_firstname) ? $error_firstname : null ?></p>
                         <!-- firstname=Bruce -->
                     </div>
 
@@ -181,161 +366,3 @@ $a_month = ["Janvier", "Février", "Mars", "Avril", "Mai", "Juin", "Juillet", "A
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
 </body>
 </html>
-
-
-<?php
-// From Treatment
-// --
-
-// INFO : Define the request method
-// --
-// $request_method = $_SERVER['REQUEST_METHOD'];
-// echo $request_method . "<br>";
-
-
-// Retrieve form data
-if ($_SERVER['REQUEST_METHOD'] === 'POST')
-{
-    // INFO: Valeurs du tableau $_POST
-    // Array (
-    //     [crsf-token] => null,
-    //     [firstname] => null
-    //     [lastname] => null
-    //     [birthday] => Array ( 
-    //         [day] => null 
-    //         [month] => null 
-    //         [year] => null 
-    //     ) 
-    //     [email] => null
-    //     [password] => null
-    // )
-    print_r($_POST);
-
-
-    // Retrieve Form Data
-    // --
-
-    // Retrieve the CSRF Token
-    $csrfToken = isset($_POST['csrf-token']) ? $_POST['csrf-token'] : null;
-    // var_dump($csrfToken); echo "<br>";
-
-    // Retrieve the user Firstname
-    $firstname = isset($_POST['firstname']) ? $_POST['firstname'] : null;
-    // var_dump($firstname); echo "<br>";
-
-    // Retrieve the user Lastname
-    $lastname = isset($_POST['lastname']) ? $_POST['lastname'] : null;
-    // var_dump($lastname); echo "<br>";
-    
-    // Retrieve the user Birthday
-    $birthday_day = isset($_POST['birthday']['day']) ? $_POST['birthday']['day'] : null;
-    $birthday_month = isset($_POST['birthday']['month']) ? $_POST['birthday']['month'] : null;
-    $birthday_year = isset($_POST['birthday']['year']) ? $_POST['birthday']['year'] : null;
-    // var_dump($birthday_day); echo "<br>";
-    // var_dump($birthday_month); echo "<br>";
-    // var_dump($birthday_year); echo "<br>";
-
-    // Retrieve the user Email
-    $email = isset($_POST['email']) ? $_POST['email'] : null;
-    // var_dump($email); echo "<br>";
-
-    // Retrieve the user Password
-    $password = isset($_POST['password']) ? $_POST['password'] : null;
-    // var_dump($password); echo "<br>";
-
-    // Retrieve the user Gender
-    $gender = isset($_POST['gender']) ? $_POST['gender'] : null;
-    // var_dump($gender); echo "<br>";
-
-    // Retrieve the Agree Terms
-    $agreeTerms = isset($_POST['agreeTerms']) ? true : false;
-    // var_dump($agreeTerms); echo "<br>";
-
-
-    // Check Form Data
-    // --
-
-
-    // Create the $errors array
-    $errors = [];
-
-
-    // Check CSRF Token
-    // SELECT id <table> WHERE token="$csrfToken"
-    // SI id = Token est valide
-    // Sinon = token invalide
-    // array_push($errors, "token invalide") Si la donnée est invalide
-
-
-    // Check firstname
-    // if ( !preg_match("/[a-z]+/i", $firstname) )
-    if ( !preg_match("/[a-z]{2,}/i", $firstname) )
-    {
-        // array_push($errors, "") Si la donnée est invalide
-        array_push($errors, [
-            'field' => "firstname",
-            'message' => "Votre prénom n'est pas valide."
-        ]);
-    }
-
-    // Check Lastname
-    // array_push($errors, "") Si la donnée est invalide
-
-    // Check Birthday
-    // array_push($errors, "") Si la donnée est invalide
-    
-    // Check Email
-    // array_push($errors, "") Si la donnée est invalide
-    
-    // Check Password
-    // array_push($errors, "") Si la donnée est invalide
-    
-    // Check Gender
-    // array_push($errors, "") Si la donnée est invalide
-    
-    // Check Agree Terms
-    // array_push($errors, "") Si la donnée est invalide
-
-
-
-    // Save Data in DB
-    // --
-
-    // Check the $errors array
-    // if $error is empty, we can save data
-    // else we display errors messages
-
-    if ( empty($errors) )
-    {
-        // Save data
-        echo "YOUPI !! On enregistre les données dans la BDD";
-    }
-    else 
-    {
-        // display errors messages
-        echo "Booooo t'as fait des erreurs !";
-    }
-
-    
-}
-
-
-?>
-<br>
-<br>
-<br>
-<br>
-<br>
-<br>
-<br>
-<br>
-<br>
-<br>
-<br>
-<br>
-<br>
-<br>
-<br>
-<br>
-<br>
-<br>
