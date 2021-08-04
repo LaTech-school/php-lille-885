@@ -1,0 +1,5 @@
+MVC
+
+Model           = Source de données (BDD, json, xml, API)
+View            = Structure de données (HTML)
+Controller      = Fonction qui recup les données, les traitent et les injectent dans la vue

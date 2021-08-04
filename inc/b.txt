@@ -1,0 +1,4 @@
+Fichier B.txt
+
+
+echo "Yolo";

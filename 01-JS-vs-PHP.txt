@@ -1,0 +1,5 @@
+JavaScript                     VS.              PHP 
+- Language Client                               - Language Serveur
+- Sur l'ordi de l'utilisateur                   - Sur un serveur 
+- HTML, CSS, JavaScript                         - PHP, SQL
+                                                - capable de communiquer avec une BDD

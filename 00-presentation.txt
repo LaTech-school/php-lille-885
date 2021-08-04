@@ -1,0 +1,11 @@
+- Origines: Compteur de visite sur une page perso
+- Année: 1994
+- Nom du createur: Rasmus Lersdorf
+- Languages inspirés: C++, PERL
+- Signification: P.H.P. Personnal HomePage
+
+- Le projet PHP repris par: Andy Gutmans, Zeev Suraski en 1997, etudiants au MIT
+- Ils fondent la société ZEND
+- Signification Aujourd'hui: PHP Hypertext Processor
+
+- Ressources : php.net, php-fig.org

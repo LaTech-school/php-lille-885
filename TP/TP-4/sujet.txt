@@ -1,0 +1,23 @@
+Creer un fichier 'register.php' qui affiche un formulaire HTML (method GET)
+
+Champs du formulaire 
+- Prénom
+- Nom
+- Date de naissance (liste déroulante <select>)
+- Email
+- Mot de passe
+- Genre (<input type="radio"> M, F, N)
+- J'accepte les CGU (<input type="checkbox">)
+
+Date de naissance
+- Jours générée en PHP
+- Mois générée en PHP
+- Années générée en PHP
+
+
+
+Creer un fichier 'login.php' qui affiche un formulaire HTML (method POST)
+
+Champs du formulaire 
+- Email
+- Mot de passe

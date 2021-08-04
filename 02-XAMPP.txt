@@ -1,0 +1,15 @@
+
+X   Cross Platform
+A   Apache (serveur HTTP)
+M   MariaDB (Serveur SQL)
+P   PHP 
+P   Perl
+
+
+Répertoire de travail 
+Win: C:\\xampp\htdocs\php 
+Mac: /xampp/htdocs/php
+
+
+Xammp = Model LAMP  Linux, Apache, MySQL, PHP
+        Model MEAN  MongoDB, ExpressJS, Angular, NodeJS

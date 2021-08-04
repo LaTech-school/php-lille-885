@@ -1,0 +1,15 @@
+Outils pour ecrire et lire du PHP 
+
+Pour écrire du PHP
+- Editeur de texte (blocnote)
+- Editeur de texte CLI (emacs, VI, VIM)
+- IDE Integrated Development Environment (VSCode, Atom, Braket, SublimText, PHPStorm)
+
+Lire du PHP (interpréter du PHP)
+- Serveur HTTP (Apache, Nginx) n'interpréte pas de PHP 
+- Serveur HTTP + Module PHP
+- Un fichier PHP  (ex: index.php, monSuperFicher.php)
+- Les balises PHP <?php ?>
+
+- Navigateur
+- CLI 

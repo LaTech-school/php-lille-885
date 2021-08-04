@@ -1,0 +1,42 @@
+BASE DE DONNEES
+-----------
+
+Création d'un BDD "cours_php_bdd"
+Création des tables "user" et "book"
+
+    Table "user"
+    - id 
+    - firstname 
+    - lastname 
+    - fullname 
+    - screenname 
+    - email 
+    - password 
+    - birthday 
+    - gender
+    - registerAt
+    - lastLoginAt
+    - loginCounter
+
+    Table "book"
+    - id
+    - title
+    - description
+    - cover
+    - price
+
+
+
+PAGES 
+-----------
+
+Création du formulaire de creation de compte
+Création du formulaire d'identification
+Création du C.R.U.D. livre
+
+
+SCRIPT PHP 
+-----------
+
+Connexion BDD 
+Traitement des formulaires
