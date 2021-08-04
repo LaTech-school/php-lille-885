@@ -199,10 +199,19 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST')
         {
             if ($error['field'] == "firstname")
             {
-                echo "<pre>";
-                print_r($error['message']);
                 $error_firstname = $error['message'];
-                echo "</pre>";
+            }
+            if ($error['field'] == "lastname")
+            {
+                $error_lastname = $error['message'];
+            }
+            if ($error['field'] == "gender")
+            {
+                $error_gender = $error['message'];
+            }
+            if ($error['field'] == "agreeTerms")
+            {
+                $error_agreeTerms = $error['message'];
             }
         }
 
@@ -268,6 +277,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST')
                     <div class="mb-3">
                         <label for="lastname">Nom</label>
                         <input type="text" class="form-control" name="lastname" id="lastname" placeholder="Nom">
+                        <p><?= isset($error_lastname) ? $error_lastname : null ?></p>
                         <!-- lastname=Wayne -->
                     </div>
 
@@ -343,6 +353,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST')
                             <label><input type="radio" name="gender" value="F"> Femme</label>
                             <label><input type="radio" name="gender" value="N"> Ne pas renseigner</label>
                         </div>
+                        <p><?= isset($error_gender) ? $error_gender : null ?></p>
                     </div>
 
 
@@ -352,6 +363,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST')
                             <input type="checkbox" name="agreeTerms">
                             J'accepte les conditions générale d'utilisation.
                         </label>
+                        <p><?= isset($error_agreeTrems) ? $error_agreeTrems : null ?></p>
                     </div>
 
                     <button type="submit" class="btn btn-success">Je m'inscrit</button>
