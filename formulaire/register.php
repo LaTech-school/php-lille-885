@@ -8,6 +8,16 @@ ini_set('display_startup_errors', 1);
 error_reporting(E_ALL);
 
 
+// Generate CSRF Token
+// --
+
+// Generate the MD5 HASH
+$csrfToken = md5(uniqid());
+
+// Save tha hash in database
+// INSERT INTO <table> (token) VAULES "$csrfToken"
+
+
 // Variables Definition
 // --
 
@@ -59,7 +69,7 @@ $a_month = ["Janvier", "Février", "Mars", "Avril", "Mai", "Juin", "Juillet", "A
 
                 <form method="POST" novalidate>
 
-                    <input type="hidden" name="crsf-token">
+                    <input type="hidden" name="csrf-token" value="<?= $csrfToken ?>">
 
                     <!-- Firstname -->
                     <div class="mb-3">
@@ -202,34 +212,32 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST')
     print_r($_POST);
 
 
-    
-
     // Retrieve the CSRF Token
-    $crsfToken = $_POST['crsf-token'];
-    var_dump($crsfToken); echo "<br>";
+    $csrfToken = isset($_POST['csrf-token']) ? $_POST['csrf-token'] : null;
+    var_dump($csrfToken); echo "<br>";
 
     // Retrieve the user Firstname
-    $firstname = $_POST['firstname'];
+    $firstname = isset($_POST['firstname']) ? $_POST['firstname'] : null;
     var_dump($firstname); echo "<br>";
 
     // Retrieve the user Lastname
-    $lastname = $_POST['lastname'];
+    $lastname = isset($_POST['lastname']) ? $_POST['lastname'] : null;
     var_dump($lastname); echo "<br>";
     
     // Retrieve the user Birthday
-    $birthday_day = $_POST['birthday']['day'];
-    $birthday_month = $_POST['birthday']['month'];
-    $birthday_year = $_POST['birthday']['year'];
+    $birthday_day = isset($_POST['birthday']['day']) ? $_POST['birthday']['day'] : null;
+    $birthday_month = isset($_POST['birthday']['month']) ? $_POST['birthday']['month'] : null;
+    $birthday_year = isset($_POST['birthday']['year']) ? $_POST['birthday']['year'] : null;
     var_dump($birthday_day); echo "<br>";
     var_dump($birthday_month); echo "<br>";
     var_dump($birthday_year); echo "<br>";
 
     // Retrieve the user Email
-    $email = $_POST['email'];
+    $email = isset($_POST['email']) ? $_POST['email'] : null;
     var_dump($email); echo "<br>";
 
     // Retrieve the user Password
-    $password = $_POST['password'];
+    $password = isset($_POST['password']) ? $_POST['password'] : null;
     var_dump($password); echo "<br>";
 
     // Retrieve the user Gender
