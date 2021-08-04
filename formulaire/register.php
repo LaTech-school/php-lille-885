@@ -31,6 +31,9 @@ $a_month = ["Janvier", "Février", "Mars", "Avril", "Mai", "Juin", "Juillet", "A
 // Define valide genders
 $availableGenders = ['M','F','N'];
 
+// Create the $errors array
+$errors = [];
+
 
 
 // From Treatment
@@ -105,9 +108,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST')
     // --
 
 
-    // Create the $errors array
-    $errors = [];
-
 
     // Check CSRF Token
     // SELECT id <table> WHERE token="$csrfToken"
@@ -142,7 +142,21 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST')
     // array_push($errors, "") Si la donnée est invalide
     
     // Check Email
-    // array_push($errors, "") Si la donnée est invalide
+    if ( empty($email) )
+    {
+        array_push($errors, [
+            'field' => "email",
+            'message' => "L'adresse email est obligatoire."
+        ]);
+    }
+    else if ( !filter_var($email, FILTER_VALIDATE_EMAIL) )
+    {
+        // array_push($errors, "") Si la donnée est invalide
+        array_push($errors, [
+            'field' => "email",
+            'message' => "Votre adresse email n'est pas valide."
+        ]);
+    }
     
     // Check Password
     // array_push($errors, "") Si la donnée est invalide
@@ -194,26 +208,26 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST')
         print_r($errors);
         echo "</pre>";
 
-        //  Affiche le message d'erreur de firstname
-        foreach ($errors as $error)
-        {
-            if ($error['field'] == "firstname")
-            {
-                $error_firstname = $error['message'];
-            }
-            if ($error['field'] == "lastname")
-            {
-                $error_lastname = $error['message'];
-            }
-            if ($error['field'] == "gender")
-            {
-                $error_gender = $error['message'];
-            }
-            if ($error['field'] == "agreeTerms")
-            {
-                $error_agreeTerms = $error['message'];
-            }
-        }
+        // //  Affiche le message d'erreur de firstname
+        // foreach ($errors as $error)
+        // {
+        //     if ($error['field'] == "firstname")
+        //     {
+        //         $error_firstname = $error['message'];
+        //     }
+        //     if ($error['field'] == "lastname")
+        //     {
+        //         $error_lastname = $error['message'];
+        //     }
+        //     if ($error['field'] == "gender")
+        //     {
+        //         $error_gender = $error['message'];
+        //     }
+        //     if ($error['field'] == "agreeTerms")
+        //     {
+        //         $error_agreeTerms = $error['message'];
+        //     }
+        // }
 
     }
 
@@ -221,6 +235,18 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST')
 }
 
 
+function showError(array $errors, string $field)
+{
+    foreach ($errors as $error)
+    {
+        if ($error['field'] == $field)
+        {
+            return $error['message'];
+        }
+    }
+
+    return null;
+}
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -268,7 +294,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST')
                     <div class="mb-3">
                         <label for="firstname">Prénom</label>
                         <input type="text" class="form-control" name="firstname" id="firstname" placeholder="Prénom">
-                        <p><?= isset($error_firstname) ? $error_firstname : null ?></p>
+                        <p><?= showError($errors, 'firstname') ?></p>
                         <!-- firstname=Bruce -->
                     </div>
 
@@ -277,7 +303,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST')
                     <div class="mb-3">
                         <label for="lastname">Nom</label>
                         <input type="text" class="form-control" name="lastname" id="lastname" placeholder="Nom">
-                        <p><?= isset($error_lastname) ? $error_lastname : null ?></p>
+                        <p><?= showError($errors, 'lastname') ?></p>
                         <!-- lastname=Wayne -->
                     </div>
 
@@ -335,6 +361,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST')
                     <div class="mb-3">
                         <label for="email">E-mail</label>
                         <input type="email" class="form-control" name="email" id="email" placeholder="E-mail">
+                        <p><?= showError($errors, 'email') ?></p>
+
                     </div>
 
 
@@ -353,7 +381,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST')
                             <label><input type="radio" name="gender" value="F"> Femme</label>
                             <label><input type="radio" name="gender" value="N"> Ne pas renseigner</label>
                         </div>
-                        <p><?= isset($error_gender) ? $error_gender : null ?></p>
+                        <p><?= showError($errors, 'gender') ?></p>
                     </div>
 
 
@@ -363,7 +391,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST')
                             <input type="checkbox" name="agreeTerms">
                             J'accepte les conditions générale d'utilisation.
                         </label>
-                        <p><?= isset($error_agreeTrems) ? $error_agreeTrems : null ?></p>
+                        <p><?= showError($errors, 'agreeTerms') ?></p>
                     </div>
 
                     <button type="submit" class="btn btn-success">Je m'inscrit</button>
