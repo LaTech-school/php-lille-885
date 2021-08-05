@@ -103,6 +103,9 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST')
     $password = isset($_POST['password']) ? $_POST['password'] : null;
     // var_dump($password); echo "<br>";
 
+    // Retrieve the user Confirmation Password
+    $comfirm_password = isset($_POST['confirm_password']) ? $_POST['confirm_password'] : null;
+
     // Retrieve the user Gender
     $gender = isset($_POST['gender']) ? $_POST['gender'] : null;
     // var_dump($gender); echo "<br>";
@@ -206,9 +209,14 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST')
     
     // Check Password
     // array_push($errors, "") Si la donnée est invalide
-    
+    if (empty($password)) {
+        array_push($errors, [
+            'field' => "password",
+            'message' => "Le mot de passe est obligatoire."
+        ]);
+    }
     // - 8 caracteres minimum
-    if (strlen($password) < 8)
+    else if (strlen($password) < 8)
     {
         array_push($errors, [
             'field' => "password",
@@ -248,6 +256,15 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST')
         ]);
     }
     
+    // Check Comfirm Password
+    if ($confirm_password != $password)
+    {
+        array_push($errors, [
+            'field' => "confirm_password",
+            'message' => "Les mots de passe ne sont pas identiques."
+        ]);
+    }
+
     // Check Gender
     // array_push($errors, "") Si la donnée est invalide
     // if ( !preg_match("/(M|F|N)/", $gender) )
@@ -458,8 +475,14 @@ function showError(array $errors, string $field)
 
                     <!-- Password -->
                     <div class="mb-3">
-                        <label class="hide" for="password">Mot de passe</label>
-                        <input type="password" class="form-control" name="password" id="password" placeholder="Mot de passe">
+                        <label class="hide" for="password">Nouveau mot de passe</label>
+                        <input type="text" class="form-control" name="password" id="password" placeholder="Nouveau mot de passe">
+                    </div>
+
+                    <!-- Verification du mot Password -->
+                    <div class="mb-3">
+                        <label class="hide" for="confirm_password">Ressaisir votre mot de passe</label>
+                        <input type="text" class="form-control" name="confirm_password" id="confirm_password" placeholder="Ressaisir votre mot de passe">
                     </div>
 
 
