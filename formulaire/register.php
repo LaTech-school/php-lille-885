@@ -431,7 +431,7 @@ function showError(array $errors, string $field)
                                     <option value="">Jour</option>
                                     <!-- Days list by PHP -->
                                     <?php for ($i=1; $i<=31; $i++): ?>
-                                    <option value="<?= $i ?>">
+                                    <option value="<?= $i ?>" <?= $birthday_day == $i ? "selected" : null ?>>
                                         <?= $i ?>
                                     </option>
                                     <?php endfor; ?>
