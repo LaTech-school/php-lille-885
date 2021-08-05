@@ -22,7 +22,7 @@ $csrfToken = md5(uniqid());
 // --
 
 // Define Max and Min year value for the birthday[year] <select>
-$max_year = date('Y');
+$max_year = date('Y');  // TODO : Voir les date
 $min_year = $max_year - 100;
 
 // Define the month array
@@ -33,7 +33,6 @@ $availableGenders = ['M','F','N'];
 
 // Create the $errors array
 $errors = [];
-
 
 
 // From Treatment
@@ -273,6 +272,9 @@ function showError(array $errors, string $field)
         .gender-fields label {
             display: inline-block;
         }
+        .hide {
+            display: none;
+        }
     </style>
 </head>
 <body>
@@ -288,11 +290,11 @@ function showError(array $errors, string $field)
 
                 <form method="POST" novalidate>
 
-                    <input type="text" name="csrf-token" value="<?= $csrfToken ?>">
+                    <input type="hidden" name="csrf-token" value="<?= $csrfToken ?>">
 
                     <!-- Firstname -->
                     <div class="mb-3">
-                        <label for="firstname">Prénom</label>
+                        <label class="hide" for="firstname">Prénom</label>
                         <input type="text" class="form-control" name="firstname" id="firstname" placeholder="Prénom">
                         <p><?= showError($errors, 'firstname') ?></p>
                         <!-- firstname=Bruce -->
@@ -301,7 +303,7 @@ function showError(array $errors, string $field)
 
                     <!-- Lastname -->
                     <div class="mb-3">
-                        <label for="lastname">Nom</label>
+                        <label class="hide" for="lastname">Nom</label>
                         <input type="text" class="form-control" name="lastname" id="lastname" placeholder="Nom">
                         <p><?= showError($errors, 'lastname') ?></p>
                         <!-- lastname=Wayne -->
@@ -310,7 +312,7 @@ function showError(array $errors, string $field)
 
                     <!-- Birthday -->
                     <div class="mb-3">
-                        <label>Date de naissance</label>
+                        <label class="hide">Date de naissance</label>
 
                         <div class="row">
 
@@ -359,7 +361,7 @@ function showError(array $errors, string $field)
 
                     <!-- Email -->
                     <div class="mb-3">
-                        <label for="email">E-mail</label>
+                        <label class="hide" for="email">E-mail</label>
                         <input type="email" class="form-control" name="email" id="email" placeholder="E-mail">
                         <p><?= showError($errors, 'email') ?></p>
 
@@ -368,14 +370,14 @@ function showError(array $errors, string $field)
 
                     <!-- Password -->
                     <div class="mb-3">
-                        <label for="password">Mot de passe</label>
+                        <label class="hide" for="password">Mot de passe</label>
                         <input type="password" class="form-control" name="password" id="password" placeholder="Mot de passe">
                     </div>
 
 
                     <!-- Gender -->
                     <div class="mb-3">
-                        <label>Genre</label>
+                        <label class="hide">Genre</label>
                         <div class="gender-fields">
                             <label><input type="radio" name="gender" value="M"> Homme</label>
                             <label><input type="radio" name="gender" value="F"> Femme</label>
