@@ -307,11 +307,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST')
         // display errors messages
         echo "Booooo t'as fait des erreurs !<br><br>";
 
-
-        echo "<pre>";
-        print_r($errors);
-        echo "</pre>";
-
         // //  Affiche le message d'erreur de firstname
         // foreach ($errors as $error)
         // {
