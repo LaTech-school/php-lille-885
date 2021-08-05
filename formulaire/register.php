@@ -22,17 +22,26 @@ $csrfToken = md5(uniqid());
 // --
 
 // Define Max and Min year value for the birthday[year] <select>
-$max_year = date('Y');  // TODO : Voir les date
-$min_year = $max_year - 100;
+$max_year       = date('Y');  // TODO : Voir les date
+$min_year       = $max_year - 100;
 
 // Define the month array
-$a_month = ["Janvier", "Février", "Mars", "Avril", "Mai", "Juin", "Juillet", "Aout", "Septembre", "Octobre", "Novembre", "Décembre"];
+$a_month        = ["Janvier", "Février", "Mars", "Avril", "Mai", "Juin", "Juillet", "Aout", "Septembre", "Octobre", "Novembre", "Décembre"];
 
 // Define valide genders
 $availableGenders = ['M','F','N'];
 
 // Create the $errors array
-$errors = [];
+$errors         = [];
+
+$firstname      = null;
+$lastname       = null;
+$birthday_day   = 0;
+$birthday_month = 0;
+$birthday_year  = 0;
+$email          = null;
+$gender         = null;
+$agreeTerms     = false;
 
 
 // From Treatment
@@ -395,7 +404,7 @@ function showError(array $errors, string $field)
                     <!-- Firstname -->
                     <div class="mb-3">
                         <label class="hide" for="firstname">Prénom</label>
-                        <input type="text" class="form-control" name="firstname" id="firstname" placeholder="Prénom">
+                        <input type="text" class="form-control" name="firstname" id="firstname" placeholder="Prénom" value="<?= $firstname ?>">
                         <p><?= showError($errors, 'firstname') ?></p>
                         <!-- firstname=Bruce -->
                     </div>
@@ -404,7 +413,7 @@ function showError(array $errors, string $field)
                     <!-- Lastname -->
                     <div class="mb-3">
                         <label class="hide" for="lastname">Nom</label>
-                        <input type="text" class="form-control" name="lastname" id="lastname" placeholder="Nom">
+                        <input type="text" class="form-control" name="lastname" id="lastname" placeholder="Nom" value="<?= $lastname ?>">
                         <p><?= showError($errors, 'lastname') ?></p>
                         <!-- lastname=Wayne -->
                     </div>
@@ -456,13 +465,15 @@ function showError(array $errors, string $field)
                             </div>
                         </div>
                         
+                        <p><?= showError($errors, 'birthday') ?></p>
+
                     </div>
 
 
                     <!-- Email -->
                     <div class="mb-3">
                         <label class="hide" for="email">E-mail</label>
-                        <input type="email" class="form-control" name="email" id="email" placeholder="E-mail">
+                        <input type="email" class="form-control" name="email" id="email" placeholder="E-mail" value="<?= $email ?>">
                         <p><?= showError($errors, 'email') ?></p>
 
                     </div>
@@ -471,13 +482,15 @@ function showError(array $errors, string $field)
                     <!-- Password -->
                     <div class="mb-3">
                         <label class="hide" for="password">Nouveau mot de passe</label>
-                        <input type="text" class="form-control" name="password" id="password" placeholder="Nouveau mot de passe">
+                        <input type="password" class="form-control" name="password" id="password" placeholder="Nouveau mot de passe">
+                        <p><?= showError($errors, 'password') ?></p>
+
                     </div>
 
                     <!-- Verification du mot Password -->
                     <div class="mb-3">
                         <label class="hide" for="confirm_password">Ressaisir votre mot de passe</label>
-                        <input type="text" class="form-control" name="confirm_password" id="confirm_password" placeholder="Ressaisir votre mot de passe">
+                        <input type="password" class="form-control" name="confirm_password" id="confirm_password" placeholder="Ressaisir votre mot de passe">
                         <p><?= showError($errors, 'confirm_password') ?></p>
                     </div>
 
@@ -496,8 +509,10 @@ function showError(array $errors, string $field)
 
                     <!-- Agree terms -->
                     <div class="mb-3">
+
+                        <?php var_dump( $agreeTerms ) ?>
                         <label>
-                            <input type="checkbox" name="agreeTerms">
+                            <input type="checkbox" name="agreeTerms" <?= $agreeTerms ? "checked" : null ?>>
                             J'accepte les conditions générale d'utilisation.
                         </label>
                         <p><?= showError($errors, 'agreeTerms') ?></p>
