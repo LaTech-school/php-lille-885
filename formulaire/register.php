@@ -104,7 +104,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST')
     // var_dump($password); echo "<br>";
 
     // Retrieve the user Confirmation Password
-    $comfirm_password = isset($_POST['confirm_password']) ? $_POST['confirm_password'] : null;
+    $confirm_password = isset($_POST['confirm_password']) ? $_POST['confirm_password'] : null;
 
     // Retrieve the user Gender
     $gender = isset($_POST['gender']) ? $_POST['gender'] : null;
