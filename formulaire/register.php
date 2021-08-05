@@ -60,7 +60,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST')
     //     [email] => null
     //     [password] => null
     // )
-    print_r($_POST);
+    // print_r($_POST);
 
 
     // Retrieve Form Data
@@ -483,6 +483,7 @@ function showError(array $errors, string $field)
                     <div class="mb-3">
                         <label class="hide" for="confirm_password">Ressaisir votre mot de passe</label>
                         <input type="text" class="form-control" name="confirm_password" id="confirm_password" placeholder="Ressaisir votre mot de passe">
+                        <p><?= showError($errors, 'confirm_password') ?></p>
                     </div>
 
 
