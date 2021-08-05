@@ -4,10 +4,10 @@ BASE DE DONNEES
 Création d'un BDD "cours_php_bdd"
 Création des tables "user" et "book"
 
-    Table "user"
-    - id 
-    - firstname 
-    - lastname 
+    Table "user"(unsigned / non signé) non
+    - id                INT(11)  PK AI UQ UN (unsigned) 
+    - firstname         VARCHAR(40)
+    - lastname          VARCHAR(40)
     - fullname 
     - screenname 
     - email 
@@ -16,7 +16,7 @@ Création des tables "user" et "book"
     - gender
     - registerAt
     - lastLoginAt
-    - loginCounter
+    - loginCounte
 
     Table "book"
     - id
