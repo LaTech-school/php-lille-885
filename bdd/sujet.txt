@@ -27,8 +27,8 @@ Création des tables "user" et "book"
 
     Table "token"
     - id                INT(11)  PK AI UQ NN UN (unsigned) 
-    - token             CHAR(32)
-    - expiration        DATETIME
+    - token             CHAR(32) NN
+    - expiration        DATETIME NN
 
 
 
