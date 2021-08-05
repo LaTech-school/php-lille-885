@@ -304,45 +304,22 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST')
 
     // Check the $errors array
     // if $error is empty, we can save data
-    // else we display errors messages
+    // else we display errors messages.... DO NOTHING
 
     if ( empty($errors) )
     {
         // Save data
         echo "YOUPI !! On enregistre les données dans la BDD";
     }
-    else 
-    {
-        // display errors messages
-        echo "Booooo t'as fait des erreurs !<br><br>";
-
-        // //  Affiche le message d'erreur de firstname
-        // foreach ($errors as $error)
-        // {
-        //     if ($error['field'] == "firstname")
-        //     {
-        //         $error_firstname = $error['message'];
-        //     }
-        //     if ($error['field'] == "lastname")
-        //     {
-        //         $error_lastname = $error['message'];
-        //     }
-        //     if ($error['field'] == "gender")
-        //     {
-        //         $error_gender = $error['message'];
-        //     }
-        //     if ($error['field'] == "agreeTerms")
-        //     {
-        //         $error_agreeTerms = $error['message'];
-        //     }
-        // }
-
-    }
-
-    
 }
 
-
+/**
+ * Display an error message for a specific field
+ *
+ * @param array $errors The errors array
+ * @param string $field specify the field name
+ * @return void
+ */
 function showError(array $errors, string $field)
 {
     foreach ($errors as $error)

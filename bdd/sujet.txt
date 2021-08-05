@@ -25,6 +25,11 @@ Création des tables "user" et "book"
     - cover
     - price
 
+    Table "token"
+    - id 
+    - token 
+    - expiration 
+
 
 
 PAGES 
