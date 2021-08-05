@@ -19,16 +19,16 @@ Création des tables "user" et "book"
     - loginCounter      INT NN          Default: 0
 
     Table "book"
-    - id
-    - title
-    - description
-    - cover
-    - price
+    - id                INT(11)  PK AI UQ NN UN (unsigned) 
+    - title             VARCHAR(120)
+    - description       TEXT
+    - cover             VARCHAR(80)
+    - price             DECIMAL(5,2)  999.99
 
     Table "token"
-    - id 
-    - token 
-    - expiration 
+    - id                INT(11)  PK AI UQ NN UN (unsigned) 
+    - token             CHAR(32)
+    - expiration        DATETIME
 
 
 
