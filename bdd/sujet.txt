@@ -10,13 +10,13 @@ Création des tables "user" et "book"
     - lastname          VARCHAR(40) NN          DOE
     - fullname          VARCHAR(81) NN          John DOE
     - screenname        VARCHAR(43) NN          John D.
-    - email             VARCHAR(255)
-    - password          
-    - birthday 
-    - gender
-    - registerAt
-    - lastLoginAt
-    - loginCounte
+    - email             VARCHAR(255) UQ NN
+    - password          VARCHAR(255) NN
+    - birthday          DATE    NN
+    - gender            ENUM('M','F','N') NN
+    - registerAt        DATETIME NN
+    - lastLoginAt       DATETIME 
+    - loginCounter      INT NN          Default: 0
 
     Table "book"
     - id
