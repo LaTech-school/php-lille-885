@@ -232,6 +232,14 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST')
             'message' => "Votre mot de passe doit contenir 8 caractères minimum."
         ]);
     }
+    // - 20 caracteres minimum
+    else if (strlen($password) > 20)
+    {
+        array_push($errors, [
+            'field' => "password",
+            'message' => "Votre mot de passe doit contenir 20 caractères maximum."
+        ]);
+    }
     // - Au moins un alpahbetique minuscule
     else if (!preg_match('@[a-z]+@', $password))
     {

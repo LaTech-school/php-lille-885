@@ -5,13 +5,13 @@ Création d'un BDD "cours_php_bdd"
 Création des tables "user" et "book"
 
     Table "user"(unsigned / non signé) non
-    - id                INT(11)  PK AI UQ UN (unsigned) 
-    - firstname         VARCHAR(40)
-    - lastname          VARCHAR(40)
-    - fullname 
-    - screenname 
-    - email 
-    - password 
+    - id                INT(11)  PK AI UQ NN UN (unsigned) 
+    - firstname         VARCHAR(40) NN          John
+    - lastname          VARCHAR(40) NN          DOE
+    - fullname          VARCHAR(81) NN          John DOE
+    - screenname        VARCHAR(43) NN          John D.
+    - email             VARCHAR(255)
+    - password          
     - birthday 
     - gender
     - registerAt
