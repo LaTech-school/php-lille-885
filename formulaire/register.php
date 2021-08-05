@@ -159,21 +159,32 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST')
 
     // Check Birthday
     // array_push($errors, "") Si la donnée est invalide
+    // if ( 
+    //     is_numeric($birthday_day) 
+    //     && is_numeric($birthday_month) 
+    //     && is_numeric($birthday_year) 
+    //     && checkdate($birthday_month, $birthday_day, $birthday_year)
+    // )
+    // {}
+    // else { /* code en cas d'erreur */}
+
+    // if ( 
+    //     !(is_numeric($birthday_day) 
+    //     && is_numeric($birthday_month) 
+    //     && is_numeric($birthday_year) 
+    //     && checkdate($birthday_month, $birthday_day, $birthday_year))
+    // )
     if ( 
-        is_numeric($birthday_day) 
-        && is_numeric($birthday_month) 
-        && is_numeric($birthday_year) 
-        && DateTime::createFromFormat(
-            'Y-m-d', 
-            $birthday_year."-".$birthday_month."-".$birthday_day
-        ) 
+        !is_numeric($birthday_day) 
+        || !is_numeric($birthday_month) 
+        || !is_numeric($birthday_year) 
+        || !checkdate($birthday_month, $birthday_day, $birthday_year)
     )
     {
-        die ("Date valide");
-    }
-    else 
-    {
-        die ("Date invalide");
+        array_push($errors, [
+            'field' => "birthday",
+            'message' => "La date de naissance n'est pas valide."
+        ]);
     }
     
     // Check Email
@@ -195,6 +206,47 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST')
     
     // Check Password
     // array_push($errors, "") Si la donnée est invalide
+    
+    // - 8 caracteres minimum
+    if (strlen($password) < 8)
+    {
+        array_push($errors, [
+            'field' => "password",
+            'message' => "Votre mot de passe doit contenir 8 caractères minimum."
+        ]);
+    }
+    // - Au moins un alpahbetique minuscule
+    else if (!preg_match('@[a-z]+@', $password))
+    {
+        array_push($errors, [
+            'field' => "password",
+            'message' => "Votre mot de passe doit contenir au moins un caractère alphabétique en minuscule."
+        ]);
+    }
+    // - Au moins un alpahbetique majuscule
+    else if (!preg_match('@[A-Z]+@', $password))
+    {
+        array_push($errors, [
+            'field' => "password",
+            'message' => "Votre mot de passe doit contenir au moins un caractère alphabétique en majuscule."
+        ]);
+    }
+    // - Au moins un numerique
+    else if (!preg_match('@[0-9]+@', $password))
+    {
+        array_push($errors, [
+            'field' => "password",
+            'message' => "Votre mot de passe doit contenir au moins un caractère numérique."
+        ]);
+    }
+    // - Au moins un special (@#&()[]()-_!.:=+,?%$£€)
+    else if (!preg_match('@[^\w]@', $password))
+    {
+        array_push($errors, [
+            'field' => "password",
+            'message' => "Votre mot de passe doit contenir au moins un caractère spécial."
+        ]);
+    }
     
     // Check Gender
     // array_push($errors, "") Si la donnée est invalide
