@@ -499,9 +499,9 @@ function showError(array $errors, string $field)
                     <div class="mb-3">
                         <label class="hide">Genre</label>
                         <div class="gender-fields">
-                            <label><input type="radio" name="gender" value="M" <?= $gender == "M" ? "cheacked" : null ?>> Homme</label>
-                            <label><input type="radio" name="gender" value="F" <?= $gender == "F" ? "cheacked" : null ?>> Femme</label>
-                            <label><input type="radio" name="gender" value="N" <?= $gender == "N" ? "cheacked" : null ?>> Ne pas renseigner</label>
+                            <label><input type="radio" name="gender" value="M" <?= $gender == "M" ? "checked" : null ?>> Homme</label>
+                            <label><input type="radio" name="gender" value="F" <?= $gender == "F" ? "checked" : null ?>> Femme</label>
+                            <label><input type="radio" name="gender" value="N" <?= $gender == "N" ? "checked" : null ?>> Ne pas renseigner</label>
                         </div>
                         <p><?= showError($errors, 'gender') ?></p>
                     </div>
