@@ -66,6 +66,15 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST')
     // Retrieve Form Data
     // --
 
+    // On controle que l'entré "xxxx" du tableau $_POST existe
+    // Si oui, on affecte a $yyy la valeur de l'entré xxxx du tableau $_POST 
+    // Sinon on affecte a $yyy la valeur null
+    // 
+    // Si null est affecté à $yyy cela veut dire le champ du formulaire <input name"xxxx"> n'existe pas... 
+    // le champ du formulaire <input name"xxxx"> n'existe pas si l'utilisateur modifie la structure du formulaire
+    // 
+    // $yyy = isset($_POST['xxxx']) ? $_POST['xxxx'] : null;
+
     // Retrieve the CSRF Token
     $csrfToken = isset($_POST['csrf-token']) ? $_POST['csrf-token'] : null;
     // var_dump($csrfToken); echo "<br>";
@@ -106,8 +115,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST')
     // Check Form Data
     // --
 
-
-
     // Check CSRF Token
     // SELECT id <table> WHERE token="$csrfToken"
     // SI id = Token est valide
@@ -116,8 +123,15 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST')
 
 
     // Check firstname
+    if (empty($firstname))
+    {
+        array_push($errors, [
+            'field' => "firstname",
+            'message' => "Le prénom est obligatoire."
+        ]);
+    }
+    else if ( !preg_match("/[a-z]{2,}/i", $firstname) )
     // if ( !preg_match("/[a-z]+/i", $firstname) )
-    if ( !preg_match("/[a-z]{2,}/i", $firstname) )
     {
         // array_push($errors, "") Si la donnée est invalide
         array_push($errors, [
@@ -127,7 +141,13 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST')
     }
 
     // Check Lastname
-    // array_push($errors, "") Si la donnée est invalide
+    if (empty($lastname))
+    {
+        array_push($errors, [
+            'field' => "lastname",
+            'message' => "Le nom est obligatoire."
+        ]);
+    }
     if ( !preg_match("/[a-z]{2,}/i", $lastname) )
     {
         // array_push($errors, "") Si la donnée est invalide
@@ -139,6 +159,22 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST')
 
     // Check Birthday
     // array_push($errors, "") Si la donnée est invalide
+    if ( 
+        is_numeric($birthday_day) 
+        && is_numeric($birthday_month) 
+        && is_numeric($birthday_year) 
+        && DateTime::createFromFormat(
+            'Y-m-d', 
+            $birthday_year."-".$birthday_month."-".$birthday_day
+        ) 
+    )
+    {
+        die ("Date valide");
+    }
+    else 
+    {
+        die ("Date invalide");
+    }
     
     // Check Email
     if ( empty($email) )
@@ -312,7 +348,7 @@ function showError(array $errors, string $field)
 
                     <!-- Birthday -->
                     <div class="mb-3">
-                        <label class="hide">Date de naissance</label>
+                        <label>Date de naissance</label>
 
                         <div class="row">
 
