@@ -384,6 +384,9 @@ function showError(array $errors, string $field)
         .hide {
             display: none;
         }
+        .error {
+            color: #FF0000;
+        }
     </style>
 </head>
 <body>
@@ -405,7 +408,7 @@ function showError(array $errors, string $field)
                     <div class="mb-3">
                         <label class="hide" for="firstname">Prénom</label>
                         <input type="text" class="form-control" name="firstname" id="firstname" placeholder="Prénom" value="<?= $firstname ?>">
-                        <p><?= showError($errors, 'firstname') ?></p>
+                        <p class="error"><?= showError($errors, 'firstname') ?></p>
                         <!-- firstname=Bruce -->
                     </div>
 
@@ -414,7 +417,7 @@ function showError(array $errors, string $field)
                     <div class="mb-3">
                         <label class="hide" for="lastname">Nom</label>
                         <input type="text" class="form-control" name="lastname" id="lastname" placeholder="Nom" value="<?= $lastname ?>">
-                        <p><?= showError($errors, 'lastname') ?></p>
+                        <p class="error"><?= showError($errors, 'lastname') ?></p>
                         <!-- lastname=Wayne -->
                     </div>
 
@@ -444,7 +447,7 @@ function showError(array $errors, string $field)
                                     <option value="">Mois</option>
                                     <!-- Month list by PHP -->
                                     <?php for ($i=1; $i<=12; $i++): ?>
-                                    <option value="<?= $i ?>">
+                                    <option value="<?= $i ?>" <?= $birthday_month == $i ? "selected" : null ?>>
                                         <?= $a_month[$i-1] ?>
                                     </option>
                                     <?php endfor; ?>
@@ -457,7 +460,7 @@ function showError(array $errors, string $field)
                                     <option value="">Année</option>
                                     <!-- Month list by PHP -->
                                     <?php for ($i=$max_year; $i>=$min_year; $i--): ?>
-                                    <option value="<?= $i ?>">
+                                    <option value="<?= $i ?>" <?= $birthday_year == $i ? "selected" : null ?>>
                                         <?= $i ?>
                                     </option>
                                     <?php endfor; ?>
@@ -465,7 +468,7 @@ function showError(array $errors, string $field)
                             </div>
                         </div>
                         
-                        <p><?= showError($errors, 'birthday') ?></p>
+                        <p class="error"><?= showError($errors, 'birthday') ?></p>
 
                     </div>
 
@@ -474,7 +477,7 @@ function showError(array $errors, string $field)
                     <div class="mb-3">
                         <label class="hide" for="email">E-mail</label>
                         <input type="email" class="form-control" name="email" id="email" placeholder="E-mail" value="<?= $email ?>">
-                        <p><?= showError($errors, 'email') ?></p>
+                        <p class="error"><?= showError($errors, 'email') ?></p>
 
                     </div>
 
@@ -483,7 +486,7 @@ function showError(array $errors, string $field)
                     <div class="mb-3">
                         <label class="hide" for="password">Nouveau mot de passe</label>
                         <input type="password" class="form-control" name="password" id="password" placeholder="Nouveau mot de passe">
-                        <p><?= showError($errors, 'password') ?></p>
+                        <p class="error"><?= showError($errors, 'password') ?></p>
 
                     </div>
 
@@ -491,7 +494,7 @@ function showError(array $errors, string $field)
                     <div class="mb-3">
                         <label class="hide" for="confirm_password">Ressaisir votre mot de passe</label>
                         <input type="password" class="form-control" name="confirm_password" id="confirm_password" placeholder="Ressaisir votre mot de passe">
-                        <p><?= showError($errors, 'confirm_password') ?></p>
+                        <p class="error"><?= showError($errors, 'confirm_password') ?></p>
                     </div>
 
 
@@ -503,7 +506,7 @@ function showError(array $errors, string $field)
                             <label><input type="radio" name="gender" value="F" <?= $gender == "F" ? "checked" : null ?>> Femme</label>
                             <label><input type="radio" name="gender" value="N" <?= $gender == "N" ? "checked" : null ?>> Ne pas renseigner</label>
                         </div>
-                        <p><?= showError($errors, 'gender') ?></p>
+                        <p class="error"><?= showError($errors, 'gender') ?></p>
                     </div>
 
 
@@ -513,7 +516,7 @@ function showError(array $errors, string $field)
                             <input type="checkbox" name="agreeTerms" <?= $agreeTerms ? "checked" : null ?>>
                             J'accepte les conditions générale d'utilisation.
                         </label>
-                        <p><?= showError($errors, 'agreeTerms') ?></p>
+                        <p class="error"><?= showError($errors, 'agreeTerms') ?></p>
                     </div>
 
                     <button type="submit" class="btn btn-success">Je m'inscrit</button>
