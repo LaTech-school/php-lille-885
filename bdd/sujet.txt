@@ -20,10 +20,10 @@ Création des tables "user" et "book"
 
     Table "book"
     - id                INT(11)  PK AI UQ NN UN (unsigned) 
-    - title             VARCHAR(120)
+    - title             VARCHAR(120) NN
     - description       TEXT
-    - cover             VARCHAR(80)
-    - price             DECIMAL(5,2)  999.99
+    - cover             VARCHAR(80) 
+    - price             DECIMAL(5,2)  NN UN
 
     Table "token"
     - id                INT(11)  PK AI UQ NN UN (unsigned) 
