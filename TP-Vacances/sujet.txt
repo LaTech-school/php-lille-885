@@ -1,4 +1,4 @@
-SUJET
+SUJET (a rendre sur Discord en message privé, avant la rentré)
 ----------
 
 Ecrire une seule fonction permettant de retourner les informations de: 
