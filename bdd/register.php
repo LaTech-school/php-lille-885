@@ -104,6 +104,9 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST')
     // var_dump($birthday_month); echo "<br>";
     // var_dump($birthday_year); echo "<br>";
 
+    // Generate $birthday DATE
+    $birthday = $birthday_year."-".$birthday_month."-".$birthday_day;
+
     // Retrieve the user Email
     $email = isset($_POST['email']) ? $_POST['email'] : null;
     // var_dump($email); echo "<br>";
