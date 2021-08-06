@@ -8,6 +8,8 @@
 // Database connexion ID's
 // --
 
+// BDD sur XAMPP : C:/xampp/mysql/data/cours_php_bdd/*.frm .ibd .opt
+
 // Type de base de données
 $db_type = "mysql";
 
