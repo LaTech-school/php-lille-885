@@ -16,8 +16,37 @@ error_reporting(E_ALL);
 
 
 // Connexion à la base de données
-include "dbconnect.php";
+require_once "dbconnect.php";
+
 
 // Affiche la liste des utilisateurs de la table "user"
+$sql = "SELECT id, email, fullname FROM user";
 
-var_dump($db_user);
+// $pdo->query execute la requete
+// le résultat est stocké dans la variable $results
+// $results reçoit soit un tableau d'objet si la requete est OK
+// soit FALSE si la requete est en erreur
+$results = $pdo->query($sql);
+
+if ($results)
+{
+    // Affichage des données
+    // while ($row = $results->fetch(PDO::FETCH_NUM)) // Retourne la ligne sous forme de tableau numérique
+    // while ($row = $results->fetch(PDO::FETCH_ASSOC)) // Retourne la ligne sous forme de tableau associatif
+    while ($user = $results->fetch(PDO::FETCH_OBJ)) // Retourne la ligne sous forme d'objet
+    {
+        // echo "<pre>";
+        // print_r( $user );
+        // echo "</pre>";
+        echo $user->fullname;
+        echo "<hr>";
+    }
+}
+else 
+{
+    // Aucune données
+}
+
+var_dump( $pdo );echo "<br>";
+var_dump( $sql );echo "<br>";
+var_dump( $results );echo "<br>";
