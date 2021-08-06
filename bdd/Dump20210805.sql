@@ -79,8 +79,7 @@ CREATE TABLE `user` (
   `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
   `firstname` varchar(40) NOT NULL,
   `lastname` varchar(40) NOT NULL,
-  `fullname` varchar(81) DEFAULT NULL,
-  `screenname` varchar(43) DEFAULT NULL,
+  `screenname` varchar(43) NOT NULL,
   `email` varchar(255) NOT NULL,
   `password` varchar(255) NOT NULL,
   `birthday` date NOT NULL,
@@ -88,10 +87,11 @@ CREATE TABLE `user` (
   `registerAt` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
   `lastLoginAt` datetime DEFAULT NULL,
   `loginCounter` int(11) NOT NULL DEFAULT '0',
+  `fullname` varchar(81) GENERATED ALWAYS AS (concat(`firstname`,_utf8mb3' ',`lastname`)) VIRTUAL,
   PRIMARY KEY (`id`),
   UNIQUE KEY `id_UNIQUE` (`id`),
   UNIQUE KEY `email_UNIQUE` (`email`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -100,6 +100,7 @@ CREATE TABLE `user` (
 
 LOCK TABLES `user` WRITE;
 /*!40000 ALTER TABLE `user` DISABLE KEYS */;
+INSERT INTO `user` (`id`, `firstname`, `lastname`, `screenname`, `email`, `password`, `birthday`, `gender`, `registerAt`, `lastLoginAt`, `loginCounter`) VALUES (1,'John','DOE','John D.','john@doe.com','12345678','2010-01-11','N','2021-08-06 10:02:01',NULL,0);
 /*!40000 ALTER TABLE `user` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
@@ -112,4 +113,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2021-08-05 17:27:46
+-- Dump completed on 2021-08-06 10:05:56
