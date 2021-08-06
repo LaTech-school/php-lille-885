@@ -109,8 +109,11 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST')
     // var_dump($email); echo "<br>";
 
     // Retrieve the user Password
-    $password = isset($_POST['password']) ? $_POST['password'] : null;
+    $plain_password = isset($_POST['password']) ? $_POST['password'] : null;
     // var_dump($password); echo "<br>";
+
+    // Generate the password Hash
+    $crypted_password = password_hash($plain_password, PASSWORD_BCRYPT);
 
     // Retrieve the user Confirmation Password
     $confirm_password = isset($_POST['confirm_password']) ? $_POST['confirm_password'] : null;
@@ -122,6 +125,11 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST')
     // Retrieve the Agree Terms
     $agreeTerms = isset($_POST['agreeTerms']) ? true : false;
     // var_dump($agreeTerms); echo "<br>";
+
+
+    // Generate the user Screenname
+    // expected screnname: John D.
+    $screenname = $firstname." ".substr($lastname, 0, 1).".";
 
 
     // Check Form Data
@@ -218,14 +226,14 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST')
     
     // Check Password
     // array_push($errors, "") Si la donnée est invalide
-    if (empty($password)) {
+    if (empty($plain_password)) {
         array_push($errors, [
             'field' => "password",
             'message' => "Le mot de passe est obligatoire."
         ]);
     }
     // - 8 caracteres minimum
-    else if (strlen($password) < 8)
+    else if (strlen($plain_password) < 8)
     {
         array_push($errors, [
             'field' => "password",
@@ -233,7 +241,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST')
         ]);
     }
     // - 20 caracteres minimum
-    else if (strlen($password) > 20)
+    else if (strlen($plain_password) > 20)
     {
         array_push($errors, [
             'field' => "password",
@@ -241,7 +249,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST')
         ]);
     }
     // - Au moins un alpahbetique minuscule
-    else if (!preg_match('@[a-z]+@', $password))
+    else if (!preg_match('@[a-z]+@', $plain_password))
     {
         array_push($errors, [
             'field' => "password",
@@ -249,7 +257,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST')
         ]);
     }
     // - Au moins un alpahbetique majuscule
-    else if (!preg_match('@[A-Z]+@', $password))
+    else if (!preg_match('@[A-Z]+@', $plain_password))
     {
         array_push($errors, [
             'field' => "password",
@@ -257,7 +265,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST')
         ]);
     }
     // - Au moins un numerique
-    else if (!preg_match('@[0-9]+@', $password))
+    else if (!preg_match('@[0-9]+@', $plain_password))
     {
         array_push($errors, [
             'field' => "password",
@@ -265,7 +273,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST')
         ]);
     }
     // - Au moins un special (@#&()[]()-_!.:=+,?%$£€)
-    else if (!preg_match('@[^\w]@', $password))
+    else if (!preg_match('@[^\w]@', $plain_password))
     {
         array_push($errors, [
             'field' => "password",
@@ -274,7 +282,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST')
     }
     
     // Check Comfirm Password
-    if ($confirm_password != $password)
+    if ($confirm_password != $plain_password)
     {
         array_push($errors, [
             'field' => "confirm_password",
@@ -316,6 +324,33 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST')
 
     if ( empty($errors) )
     {
+        // Include DBConnect
+        require_once "dbconnect.php";
+
+        // Creation de la requete SQL
+        $sql = "INSERT INTO `user` (`firstname`,`lastname`,`screenname`,`email`,`password`,`birthday`,`gender`) 
+                            VALUES (:firstname ,:lastname ,:screenname ,:email ,:password`,:birthday ,:gender )";
+
+        // On demande a PDO de préparer la requete SQL
+        $query = $pdo->prepare($sql);
+        $query->bindValue(':firstname'  , $firstname        , PDO::PARAM_STR);
+        $query->bindValue(':lastname'   , $lastname         , PDO::PARAM_STR);
+        $query->bindValue(':screenname' , $screenname       , PDO::PARAM_STR);
+        $query->bindValue(':email'      , $email            , PDO::PARAM_STR);
+        $query->bindValue(':password'   , $crypted_password , PDO::PARAM_STR);
+        $query->bindValue(':birthday'   , $birthday         , PDO::PARAM_STR);
+        $query->bindValue(':gender'     , $gender           , PDO::PARAM_STR);
+
+        // Execution de la requete
+        $query->execute();
+
+
+
+        // $pdo
+        // echo "<pre>";
+        // print_r($_POST);
+        // echo "</pre>";
+
         // Save data
         echo "YOUPI !! On enregistre les données dans la BDD";
     }
