@@ -7,6 +7,13 @@ Ecrire une seule fonction permettant de retourner les informations de:
 - Les John
 
 
+BONUS
+----------
+
+Injecter les données du tableau en BDD
+Extraire les données de la BDD (meme base que le sujet)
+
+
 EXEMPLES 
 ----------
 
