@@ -1,4 +1,9 @@
 <?php 
+/**
+ * config.php
+ * 
+ * Configure the php App
+ */
 
 // Database connexion ID's
 // --
