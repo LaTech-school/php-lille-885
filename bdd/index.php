@@ -24,7 +24,7 @@ $sql = "SELECT id, email, fullname FROM user";
 
 // $pdo->query execute la requete
 // le résultat est stocké dans la variable $results
-// $results reçoit soit un tableau d'objet si la requete est OK
+// $results reçoit soit objet si la requete est OK
 // soit FALSE si la requete est en erreur
 $results = $pdo->query($sql);
 

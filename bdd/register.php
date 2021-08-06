@@ -8,6 +8,10 @@ ini_set('display_startup_errors', 1);
 error_reporting(E_ALL);
 
 
+// Include DBConnect
+require_once "dbconnect.php";
+
+
 // Generate CSRF Token
 // --
 
@@ -226,6 +230,30 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST')
             'message' => "Votre adresse email n'est pas valide."
         ]);
     }
+
+    // Check if email already exists
+    
+    // Define the sql query
+    $sql = "SELECT id FROM `user` WHERE email=:email";
+
+    // prepare the query
+    $query = $pdo->prepare($sql);
+    $query->bindParam(':email', $email, PDO::PARAM_STR);
+    $query->execute();
+
+    // $user vaut
+    // -> un objet si la requete trouve une correspondance en BDD
+    // -> false si la requete ne trouve aucune correspondance
+    $user = $query->fetch(PDO::FETCH_OBJ);
+
+    if ($user)
+    {
+        array_push($errors, [
+            'field' => "email",
+            'message' => "Un compte utilise déjà cette adresse e-mail."
+        ]);
+    }
+
     
     // Check Password
     // array_push($errors, "") Si la donnée est invalide
@@ -327,12 +355,9 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST')
 
     if ( empty($errors) )
     {
-        // Include DBConnect
-        require_once "dbconnect.php";
-
         // Creation de la requete SQL
         $sql = "INSERT INTO `user` (`firstname`,`lastname`,`screenname`,`email`,`password`,`birthday`,`gender`) 
-                            VALUES (:firstname ,:lastname ,:screenname ,:email ,:password`,:birthday ,:gender )";
+                            VALUES (:firstname ,:lastname ,:screenname ,:email ,:password ,:birthday ,:gender )";
 
         // On demande a PDO de préparer la requete SQL
         $query = $pdo->prepare($sql);
@@ -345,17 +370,22 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST')
         $query->bindValue(':gender'     , $gender           , PDO::PARAM_STR);
 
         // Execution de la requete
-        $exec = $query->execute();
+        if ($query->execute())
+        {
+            // Envoie un email de bienvenu
+            // ...
 
+            // Envoie un email d'activation de compte
+            // ...
 
-
-        // $pdo
-        echo "<pre>";
-        var_dump($exec);
-        echo "</pre>";
-
-        // Save data
-        echo "YOUPI !! On enregistre les données dans la BDD";
+            // Redirect the user to the login page
+            header("location: login.php");
+            exit;
+        }
+        else
+        {
+            echo "<div class=\"alert alert-danger\">Ooops.. un erreur est survenue.</div>";
+        }
     }
 }
 
