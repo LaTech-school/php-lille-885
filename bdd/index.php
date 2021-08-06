@@ -1,5 +1,11 @@
 <?php 
 
+// On force l'affichage des messages d'erreurs
+ini_set('display_errors', 1);
+ini_set('display_startup_errors', 1);
+error_reporting(E_ALL);
+
+
 // RAPPEL SQL
 // le concept C.R.U.D 
 // --
@@ -9,4 +15,9 @@
 // Delete               DELETE FROM <table> WHERE id=42
 
 
+// Connexion à la base de données
+include "dbconnect.php";
+
 // Affiche la liste des utilisateurs de la table "user"
+
+var_dump($db_user);

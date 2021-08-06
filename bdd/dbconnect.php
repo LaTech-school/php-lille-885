@@ -37,5 +37,3 @@ catch(\Exception $e) {
     die($e->getMessage());
     // die("Ooops, la connexion à la base de données à échouée!");
 }
-
-var_dump($pdo);

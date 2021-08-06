@@ -1,0 +1,57 @@
+SUJET
+----------
+
+Ecrire une seule fonction permettant de retourner les informations de: 
+- Bob DOE 
+- Les WAYNE
+- Les John
+
+
+EXEMPLES 
+----------
+
+Exemples d'utilisation de la fonction :
+
+$bob = getUsers(xxx, xxx, xxx);
+echo $bob[0]['fistname']." ". $bob[0]['lastname']." à ". $bob[0]['age']." ans.<br>";
+
+$waynes = getUsers(xxx, xxx, xxx);
+foreach($waynes as $user)
+{
+    echo $user['fistname']." ". $user['lastname']." à ". $user['age']." ans.<br>";
+}
+
+
+TABLEAU SOURCE
+----------
+
+$users = [
+    [
+        'firstname' => "John",
+        'lastname' => "DOE",
+        'age' => 35
+    ],
+    [
+        'firstname' => "John",
+        'lastname' => "WAYNE",
+        'age' => 90
+    ],
+    [
+        'firstname' => "Bob",
+        'lastname' => "DOE",
+        'age' => 22
+    ],
+    [
+        'firstname' => "Bruce",
+        'lastname' => "Wayne",
+        'age' => 80
+    ],
+];
+
+
+COMPLETEZ LA FONCTION 
+----------
+function getUsers(array $xxx, string $xxx=null, string $xxx=null): array
+{
+    // Votre code
+}
