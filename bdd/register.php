@@ -345,14 +345,14 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST')
         $query->bindValue(':gender'     , $gender           , PDO::PARAM_STR);
 
         // Execution de la requete
-        $query->execute();
+        $exec = $query->execute();
 
 
 
         // $pdo
-        // echo "<pre>";
-        // print_r($_POST);
-        // echo "</pre>";
+        echo "<pre>";
+        var_dump($exec);
+        echo "</pre>";
 
         // Save data
         echo "YOUPI !! On enregistre les données dans la BDD";

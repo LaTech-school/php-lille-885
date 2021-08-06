@@ -32,6 +32,10 @@ $db_dsn.= "charset=". $db_charset .";";
 try {
     // Instance de PDO / Creation de la connexion à la base de données
     $pdo = new PDO($db_dsn, $db_user, $db_password);
+
+    // Demande a PDO de forcer l'affichage des erreur
+    $pdo->setAttribute( PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION );
+
 }
 catch(\Exception $e) {
     die($e->getMessage());
